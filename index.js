@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // 2) ROUTE
-app.use('api/auth', authRouter);
+app.use('/api/auth', authRouter);
 
 
 
@@ -22,11 +22,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/authentication')
 
 // 4) GLOBAL ERROR HANDLER  
 
-app.use((err, res, req, next) => {
-    err.statuCode = err.statuCode || 500;
+app.use((err, req, res, next) => {
+    err.statuCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
-    res.status(err.statuCode).json({
+    res.status(err.statusCode).json({
         status: err.status,
         message: err.message,
     });
@@ -34,7 +34,7 @@ app.use((err, res, req, next) => {
 
 
 // 5) SERVER  
-const PORT = 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`App se está ejecutando en PORT ${PORT}`);
+    console.log(`Server corriendo en el puerto ${PORT}`);
 });
