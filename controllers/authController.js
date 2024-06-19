@@ -17,7 +17,7 @@ exports.signup = async(req, res, next) => {
             ...req.body,
             password: hashedPassword,
         });
-        // Generar el token JWT 
+        // Generar el JWT 
         const token = jwt.sign({userId: newUser._id}, 'secret123', { expiresIn: '1h' });
 
         res.status(201).json({
